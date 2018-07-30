@@ -69,6 +69,10 @@ public class UserAccount implements Serializable {
 	@JoinColumn(name = "user_group_id")
 	private UserGroup userGroup;
 	
+	@ManyToOne
+	@JoinColumn(name = "company_id")
+	private Company company;
+	
 	@Type(type = "jsonb")
 	@Column(columnDefinition = "jsonb")
 	private JsonNode meta;
@@ -169,6 +173,14 @@ public class UserAccount implements Serializable {
 
 	public void setUserGroup(UserGroup userGroup) {
 		this.userGroup = userGroup;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 
 	public JsonNode getMeta() {

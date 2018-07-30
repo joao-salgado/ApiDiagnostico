@@ -17,6 +17,8 @@ CREATE TABLE IF NOT EXISTS user_app(
   modified TIMESTAMP,
   user_type_id INTEGER NOT NULL
   user_group_id INTEGER NOT NULL,
+  company_id UUID NOT NULL,
   FOREIGN KEY (user_type_id) REFERENCES user_type(id),
-  FOREIGN KEY (user_group_id) REFERENCES user_group(id)
+  FOREIGN KEY (user_group_id) REFERENCES user_group(id),
+  FOREIGN KEY (company_id) REFERENCES company(id)
 );
