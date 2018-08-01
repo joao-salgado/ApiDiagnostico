@@ -17,16 +17,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.diagnostico.api.validation.PHONE_NUMBER;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
-import com.fasterxml.jackson.databind.JsonNode;
 
 @Entity
 @Table(name = "user_account")
@@ -64,18 +62,23 @@ public class UserAccount implements Serializable {
 
 	private Date birthdate;
 	
+	@NotNull(message = "O tipo de usuário é obrigatório")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_type_id")
+	private UserType userType;
+	
 	@NotNull(message = "Grupo do usuário é um campo obrigatório")
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_group_id")
 	private UserGroup userGroup;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "company_id")
 	private Company company;
 	
-	@Type(type = "jsonb")
-	@Column(columnDefinition = "jsonb")
-	private JsonNode meta;
+	/*@Type(type = "jsonb")
+	@Column(columnDefinition = "json")
+	private JsonNode meta;*/
 	
 	@PrePersist
 	public void setAttributePrePersist() {
@@ -182,14 +185,22 @@ public class UserAccount implements Serializable {
 	public void setCompany(Company company) {
 		this.company = company;
 	}
+	
+	public UserType getUserType() {
+		return userType;
+	}
 
-	public JsonNode getMeta() {
+	public void setUserType(UserType userType) {
+		this.userType = userType;
+	}
+
+	/*public JsonNode getMeta() {
 		return meta;
 	}
 
 	public void setMeta(JsonNode meta) {
 		this.meta = meta;
-	}
+	}*/
 
 	@Override
 	public int hashCode() {

@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,12 +16,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.Type;
-
-import com.fasterxml.jackson.databind.JsonNode;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "company")
@@ -37,9 +34,9 @@ public class Company implements Serializable {
 	@NotEmpty(message = "Nome é um campo obrigatório")
 	private String name;
 	
-	@Type(type = "jsonb")
+	/*@Type(type = "jsonb")
 	@Column(columnDefinition = "jsonb")
-	private JsonNode meta;
+	private JsonNode meta;*/
 	
 	@Column(updatable = false)
 	private LocalDateTime created;
@@ -51,8 +48,8 @@ public class Company implements Serializable {
 	@JoinColumn(name = "company_process_id")
 	private CompanyProcess companyProcess;
 	
-	@NotEmpty(message = "Adicione ao menos uma imagem a seu álbum")
-	@OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@Valid
+	@OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
 	private List<UserAccount> userAccount;
 	
 	@PrePersist
@@ -81,13 +78,13 @@ public class Company implements Serializable {
 		this.name = name;
 	}
 
-	public JsonNode getMeta() {
+	/*public JsonNode getMeta() {
 		return meta;
 	}
 
 	public void setMeta(JsonNode meta) {
 		this.meta = meta;
-	}
+	}*/
 
 	public LocalDateTime getCreated() {
 		return created;

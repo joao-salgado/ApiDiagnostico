@@ -1,5 +1,6 @@
 package com.diagnostico.api.resource;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.diagnostico.api.event.FeatureCreatedEvent;
+import com.diagnostico.api.event.ResourceCreatedEvent;
 import com.diagnostico.api.model.Company;
 import com.diagnostico.api.repository.CompanyRepository;
 import com.diagnostico.api.service.CompanyService;
@@ -38,6 +39,11 @@ public class CompanyResource {
 	@Autowired
 	private CompanyRepository companyRepository;
 	
+	@GetMapping
+	public List<Company> findAll() {
+		return companyRepository.findAll();
+	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<Company> findById(@PathVariable UUID id) {
 		
@@ -54,7 +60,7 @@ public class CompanyResource {
 			HttpServletResponse response) {
 		
 		Company companySaved = companyService.create(company);
-		publisher.publishEvent(new FeatureCreatedEvent(this, response, companySaved.getId()));
+		publisher.publishEvent(new ResourceCreatedEvent(this, response, companySaved.getId()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(companySaved);
 
 	}

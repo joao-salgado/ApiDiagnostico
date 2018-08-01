@@ -3,7 +3,10 @@ CREATE TABLE IF NOT EXISTS user_type (
   name TEXT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS user_app(
+INSERT INTO user_type(name) VALUES ('Tester'), ('Analista de sistema'),
+('DBA'), ('Programador'), ('Engenheiro de software');
+
+CREATE TABLE IF NOT EXISTS user_account(
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
   email TEXT NOT NULL,
@@ -12,10 +15,10 @@ CREATE TABLE IF NOT EXISTS user_app(
   sex TEXT,
   birthdate DATE,
   active BOOLEAN DEFAULT 'true',
-  meta JSONB,
+  meta jsonb,
   created TIMESTAMP DEFAULT current_timestamp,
   modified TIMESTAMP,
-  user_type_id INTEGER NOT NULL
+  user_type_id INTEGER NOT NULL,
   user_group_id INTEGER NOT NULL,
   company_id UUID NOT NULL,
   FOREIGN KEY (user_type_id) REFERENCES user_type(id),

@@ -10,8 +10,8 @@ import javax.persistence.Table;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table(name = "company_process")
-public class CompanyProcess implements Serializable {
+@Table(name = "user_type")
+public class UserType implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -19,7 +19,7 @@ public class CompanyProcess implements Serializable {
 	@GeneratedValue
 	private Long id;
 	
-	@NotEmpty(message = "Nome do usuário é um campo obrigatório")
+	@NotEmpty(message = "Nome da categoria obrigatória")
 	private String name;
 
 	public Long getId() {
@@ -54,7 +54,7 @@ public class CompanyProcess implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CompanyProcess other = (CompanyProcess) obj;
+		UserType other = (UserType) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -62,5 +62,5 @@ public class CompanyProcess implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 }

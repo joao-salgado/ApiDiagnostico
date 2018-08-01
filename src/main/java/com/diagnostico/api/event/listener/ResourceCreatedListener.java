@@ -8,12 +8,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.ApplicationListener;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.diagnostico.api.event.FeatureCreatedEvent;
+import com.diagnostico.api.event.ResourceCreatedEvent;
 
-public class FeatureCreatedListener implements ApplicationListener<FeatureCreatedEvent> {
+public class ResourceCreatedListener implements ApplicationListener<ResourceCreatedEvent> {
 
 	@Override
-	public void onApplicationEvent(FeatureCreatedEvent featureCreatedEvent) {
+	public void onApplicationEvent(ResourceCreatedEvent featureCreatedEvent) {
 		HttpServletResponse response = featureCreatedEvent.getResponse();
 		UUID id = featureCreatedEvent.getId();
 		addHeaderLocation(response, id);

@@ -2,6 +2,8 @@ CREATE TABLE IF NOT EXISTS user_group (
   id SERIAL PRIMARY KEY,
   name TEXT NOT NULL
 );
+
+INSERT INTO user_group (name) VALUES ('Admin'), ('Employee'), ('Researcher');
       
 CREATE TABLE permission (
     id SERIAL PRIMARY KEY,

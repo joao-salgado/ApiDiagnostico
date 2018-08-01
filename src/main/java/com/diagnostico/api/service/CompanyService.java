@@ -8,6 +8,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.diagnostico.api.model.Company;
+import com.diagnostico.api.model.UserAccount;
 import com.diagnostico.api.repository.CompanyRepository;
 import com.diagnostico.api.service.util.BeanUtilsProperties;
 
@@ -16,9 +17,20 @@ public class CompanyService {
 
 	@Autowired
 	private CompanyRepository companyRepository;
+	
+	@Autowired
+	private UserAccountService userService;
 
 	public Company create(Company company) {
-		return companyRepository.save(company);
+		
+		Company savedCompany = companyRepository.save(company);
+		
+		UserAccount user = company.getUserAccount().get(0);
+		user.setCompany(new Company());
+		user.getCompany().setId(savedCompany.getId());
+		
+		userService.create(user);
+		return savedCompany;
 	}
 	
 	public Company update(UUID id, Company company) {

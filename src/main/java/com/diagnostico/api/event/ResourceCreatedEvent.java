@@ -6,14 +6,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.context.ApplicationEvent;
 
-public class FeatureCreatedEvent extends ApplicationEvent {
+public class ResourceCreatedEvent extends ApplicationEvent {
 
 	private static final long serialVersionUID = 1L;
 
 	private HttpServletResponse response;
 	private UUID id;
 
-	public FeatureCreatedEvent(Object source, HttpServletResponse response, UUID id) {
+	public ResourceCreatedEvent(Object source, HttpServletResponse response, UUID id) {
 		super(source);
 		this.response = response;
 		this.id = id;
