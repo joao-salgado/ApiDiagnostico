@@ -23,9 +23,10 @@ public class CompanyService {
 
 	public Company create(Company company) {
 		
+		UserAccount user = company.getUserAccount().get(0);
+		userService.verifyExistingUserByEmail(user.getEmail());
 		Company savedCompany = companyRepository.save(company);
 		
-		UserAccount user = company.getUserAccount().get(0);
 		user.setCompany(new Company());
 		user.getCompany().setId(savedCompany.getId());
 		

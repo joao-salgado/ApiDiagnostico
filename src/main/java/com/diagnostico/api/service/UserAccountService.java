@@ -26,7 +26,7 @@ public class UserAccountService {
 		return userRepository.save(user);
 	}
 	
-	private void verifyExistingUserByEmail(String email) {
+	public void verifyExistingUserByEmail(String email) {
 		Optional<UserAccount> user = userRepository.findByEmail(email);
 		if (user.isPresent()) {
 			throw new EmailException("Email já existente");
