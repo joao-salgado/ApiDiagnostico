@@ -19,7 +19,10 @@ import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 @Entity
 @Table(name = "company")
@@ -34,9 +37,9 @@ public class Company implements Serializable {
 	@NotEmpty(message = "Nome é um campo obrigatório")
 	private String name;
 	
-	/*@Type(type = "jsonb")
+	@Type(type = "jsonb")
 	@Column(columnDefinition = "jsonb")
-	private JsonNode meta;*/
+	private JsonNode meta;
 	
 	@Column(updatable = false)
 	private LocalDateTime created;
@@ -51,6 +54,9 @@ public class Company implements Serializable {
 	@Valid
 	@OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
 	private List<UserAccount> userAccount;
+	
+	@OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
+	private List<Invite> invitations;
 	
 	@PrePersist
 	public void setAttributePrePersist() {
@@ -78,13 +84,13 @@ public class Company implements Serializable {
 		this.name = name;
 	}
 
-	/*public JsonNode getMeta() {
+	public JsonNode getMeta() {
 		return meta;
 	}
 
 	public void setMeta(JsonNode meta) {
 		this.meta = meta;
-	}*/
+	}
 
 	public LocalDateTime getCreated() {
 		return created;
@@ -116,6 +122,14 @@ public class Company implements Serializable {
 
 	public void setUserAccount(List<UserAccount> userAccount) {
 		this.userAccount = userAccount;
+	}
+	
+	public List<Invite> getInvitations() {
+		return invitations;
+	}
+
+	public void setInvitations(List<Invite> invitations) {
+		this.invitations = invitations;
 	}
 
 	@Override

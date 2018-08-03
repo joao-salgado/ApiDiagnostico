@@ -19,12 +19,19 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.diagnostico.api.model.json.JsonBinaryType;
 import com.diagnostico.api.validation.PHONE_NUMBER;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.fasterxml.jackson.databind.JsonNode;
+
+@TypeDefs({ @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class) })
 
 @Entity
 @Table(name = "user_account")
@@ -76,9 +83,9 @@ public class UserAccount implements Serializable {
 	@JoinColumn(name = "company_id")
 	private Company company;
 	
-	/*@Type(type = "jsonb")
+	@Type(type = "jsonb")
 	@Column(columnDefinition = "json")
-	private JsonNode meta;*/
+	private JsonNode meta;
 	
 	@PrePersist
 	public void setAttributePrePersist() {
@@ -194,13 +201,13 @@ public class UserAccount implements Serializable {
 		this.userType = userType;
 	}
 
-	/*public JsonNode getMeta() {
+	public JsonNode getMeta() {
 		return meta;
 	}
 
 	public void setMeta(JsonNode meta) {
 		this.meta = meta;
-	}*/
+	}
 
 	@Override
 	public int hashCode() {
