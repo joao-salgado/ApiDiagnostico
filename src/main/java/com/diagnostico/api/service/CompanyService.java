@@ -30,7 +30,7 @@ public class CompanyService {
 		user.setCompany(new Company());
 		user.getCompany().setId(savedCompany.getId());
 		
-		userService.create(user);
+		userService.createByCompany(user);
 		return savedCompany;
 	}
 	

@@ -53,7 +53,6 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 
-	@NotEmpty(message = "Telefone do usuário é um campo obrigatório")
 	@PHONE_NUMBER
 	private String phone;
 	

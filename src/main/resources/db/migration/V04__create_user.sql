@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS user_account(
   name TEXT NOT NULL,
   email TEXT NOT NULL,
   password TEXT NOT NULL,
-  phone TEXT NOT NULL,
+  phone TEXT,
   sex TEXT,
   birthdate DATE,
   active BOOLEAN DEFAULT 'true',

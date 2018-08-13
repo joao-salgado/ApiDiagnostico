@@ -30,6 +30,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.diagnostico.api.exception.handler.EmailException;
+import com.diagnostico.api.exception.handler.TokenCodeException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 @ControllerAdvice
@@ -139,6 +140,14 @@ public class DiagnosisExceptionHandler extends ResponseEntityExceptionHandler {
 		String msgUser = ex.getMessage();
 		String msgDev = ex.toString();
 		List<Error> errors = Arrays.asList(new Error(msgUser, msgDev, "email"));
+		return ResponseEntity.unprocessableEntity().body(errors);
+	}
+	
+	@ExceptionHandler({ TokenCodeException.class })
+	public ResponseEntity<Object> handleCodeException(TokenCodeException ex) {
+		String msgUser = ex.getMessage();
+		String msgDev = ex.toString();
+		List<Error> errors = Arrays.asList(new Error(msgUser, msgDev, "code"));
 		return ResponseEntity.unprocessableEntity().body(errors);
 	}
 	
