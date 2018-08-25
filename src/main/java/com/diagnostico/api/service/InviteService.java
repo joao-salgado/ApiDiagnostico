@@ -47,7 +47,7 @@ public class InviteService {
 		for(Invite invite : invitations) {
 			Map<String, String> meta = new HashMap<String, String>();
 			
-			meta.put("linkCreateUserAccount", new String(property.getOriginPermitted() + "/cadastro?token=" + invite.getCode()));
+			meta.put("linkCreateUserAccount", new String(property.getOriginPermitted() + "/#/cadastro-usuario?code=" + invite.getCode()));
 
 			emailService.sendMessageUsingTemplateAttachment(invite.getEmail(), "Criação de conta", "createUserAccount",
 					null, meta);

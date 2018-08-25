@@ -20,7 +20,7 @@ public class UserType implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotEmpty(message = "Nome da categoria obrigatória")
+	@NotEmpty(message = "Nome do tipo obrigatório")
 	private String name;
 
 	public Long getId() {

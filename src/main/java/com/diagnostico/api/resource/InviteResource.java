@@ -1,6 +1,7 @@
 package com.diagnostico.api.resource;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -41,5 +42,13 @@ public class InviteResource {
 	public Page<Invite> findAll(@PathVariable UUID id, Pageable pageable) {
 		return inviteRepository.findByCompanyId(id, pageable);
 	}
+	
+	@GetMapping("/code/{code}")
+	public ResponseEntity<Invite> findAll(@PathVariable String code) {
+		Optional<Invite> inviteOptional = inviteRepository.findByCode(code);
+		
+		return inviteOptional.isPresent() ? ResponseEntity.ok(inviteOptional.get()) : ResponseEntity.notFound().build();
+	}
+	
 
 }
