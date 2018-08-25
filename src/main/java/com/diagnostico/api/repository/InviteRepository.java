@@ -15,4 +15,6 @@ public interface InviteRepository extends JpaRepository<Invite, Long> {
 	
 	public Page<Invite> findByCompanyId(UUID id, Pageable pageable);
 
+	public Optional<Invite> findById(Long id);
+
 }

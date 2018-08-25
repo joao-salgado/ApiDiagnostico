@@ -1,5 +1,5 @@
 package com.diagnostico.api.model;
 
 public enum InviteSituation {
-	SEND, ACCEPTED
+	SEND, ACCEPTED, CANCELED
 }
