@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -55,7 +56,7 @@ public class BWQuestionnaire implements Serializable {
 	@JoinColumn(name = "company_id")
 	private Company company;
 	
-	@OneToMany(mappedBy = "bwQuestionnaire", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "bwQuestionnaire", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<BWSection> bwSections;
 	
 	@OneToMany(mappedBy = "bwQuestionnaire", fetch = FetchType.LAZY)

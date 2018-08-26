@@ -60,7 +60,6 @@ public class UserAccountResource {
 		UserAccount userSaved = userService.createByCode(user);
 		publisher.publishEvent(new ResourceCreatedEvent(this, response, userSaved.getId()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(userSaved);
-
 	}
 	
 	@PutMapping("/{id}")
