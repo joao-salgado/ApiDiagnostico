@@ -63,10 +63,17 @@ public class EmailServiceImpl implements EmailService {
 			if (meta.containsKey("linkCreateUserAccount")) {
 				context.setVariable("linkCreateUserAccount", meta.get("linkCreateUserAccount"));
 			}
+			
+			if (meta.containsKey("linkDiagnosisBW")) {
+				context.setVariable("linkDiagnosisBW", meta.get("linkDiagnosisBW"));
+			}
 
 			switch (typeEmail) {
 				case "createUserAccount":
 					content = thymeleaf.process("email/createUserAccount", context);
+					break;
+				case "openBWQuestionnaire":
+					content = thymeleaf.process("email/openBWQuestionnaire", context);
 					break;
 			}
 

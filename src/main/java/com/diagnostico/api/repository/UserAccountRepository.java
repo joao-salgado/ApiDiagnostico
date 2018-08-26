@@ -1,5 +1,6 @@
 package com.diagnostico.api.repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -12,5 +13,7 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, UUID> 
 	public Optional<UserAccount> findByEmail(String email);
 	
 	public Optional<UserAccount> findById(UUID id);
+
+	public List<UserAccount> findByCompanyIdAndUserGroupIdNot(UUID companyId, Long id);
 	
 }
