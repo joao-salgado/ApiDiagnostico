@@ -3,6 +3,7 @@ package com.diagnostico.api.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -14,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -85,6 +87,9 @@ public class UserAccount implements Serializable {
 	@Type(type = "jsonb")
 	@Column(columnDefinition = "json")
 	private JsonNode meta;
+	
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	private List<BWPersonalQuestionnaire> bwPersonalQuestionnaires;
 	
 	@PrePersist
 	public void setAttributePrePersist() {
@@ -206,6 +211,14 @@ public class UserAccount implements Serializable {
 
 	public void setMeta(JsonNode meta) {
 		this.meta = meta;
+	}
+
+	public List<BWPersonalQuestionnaire> getBwPersonalQuestionnaires() {
+		return bwPersonalQuestionnaires;
+	}
+
+	public void setBwPersonalQuestionnaires(List<BWPersonalQuestionnaire> bwPersonalQuestionnaires) {
+		this.bwPersonalQuestionnaires = bwPersonalQuestionnaires;
 	}
 
 	@Override

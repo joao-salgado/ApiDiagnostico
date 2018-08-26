@@ -67,6 +67,9 @@ public class Company implements Serializable {
 	@OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
 	private List<Invite> invitations;
 	
+	@OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
+	private List<BWQuestionnaire> bwQuestionnaires;
+	
 	@PrePersist
 	public void setAttributePrePersist() {
 		this.created = LocalDateTime.now();
@@ -163,6 +166,14 @@ public class Company implements Serializable {
 
 	public void setInvitations(List<Invite> invitations) {
 		this.invitations = invitations;
+	}
+
+	public List<BWQuestionnaire> getBwQuestionnaires() {
+		return bwQuestionnaires;
+	}
+
+	public void setBwQuestionnaires(List<BWQuestionnaire> bwQuestionnaires) {
+		this.bwQuestionnaires = bwQuestionnaires;
 	}
 
 	@Override
