@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS user_type (
   name TEXT NOT NULL
 );
 
-INSERT INTO user_type(name) VALUES ('Tester'), ('Analista de sistema'),
+INSERT INTO user_type(name) VALUES ('Admin'), ('Tester'), ('Analista de sistemas'),
 ('DBA'), ('Programador'), ('Engenheiro de software');
 
 CREATE TABLE IF NOT EXISTS user_account(

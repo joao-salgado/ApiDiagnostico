@@ -2,6 +2,7 @@ package com.diagnostico.api.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,6 +23,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.diagnostico.api.validation.PHONE_NUMBER;
 import com.fasterxml.jackson.databind.JsonNode;
 
 @Entity
@@ -36,6 +38,13 @@ public class Company implements Serializable {
 	
 	@NotEmpty(message = "Nome é um campo obrigatório")
 	private String name;
+	
+	@PHONE_NUMBER
+	private String phone;
+	
+	private Date birthdate;
+	
+	private String description;
 	
 	@Type(type = "jsonb")
 	@Column(columnDefinition = "jsonb")
@@ -82,6 +91,30 @@ public class Company implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public Date getBirthdate() {
+		return birthdate;
+	}
+
+	public void setBirthdate(Date birthdate) {
+		this.birthdate = birthdate;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public JsonNode getMeta() {
