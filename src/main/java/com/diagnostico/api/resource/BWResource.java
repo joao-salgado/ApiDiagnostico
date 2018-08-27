@@ -45,7 +45,7 @@ public class BWResource {
 	@Autowired
 	private BWPersonalQuestionnaireRepository bwPersonalQuestionnaireRepository;
 	
-	@PostMapping("/company/{companyId}")
+	@PostMapping("/companies/{companyId}")
 	public ResponseEntity<BWQuestionnaire> create(@PathVariable UUID companyId, HttpServletResponse response) {
 		
 		BWQuestionnaire bwq = bwQuestionnaireService.create(companyId);
@@ -67,7 +67,7 @@ public class BWResource {
 		}
 	}
 	
-	@GetMapping("/company/{companyId}")
+	@GetMapping("/companies/{companyId}")
 	public ResponseEntity<QuestionnaireBasicDTO> findByCompany(@PathVariable UUID companyId) {
 		
 		Optional<BWQuestionnaire> bwq = bwQuestionnaireRepository.findByCompanyIdAndStatus(companyId, QuestionnaireStatus.OPEN);
