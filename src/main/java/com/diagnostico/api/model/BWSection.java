@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -40,7 +39,7 @@ public class BWSection implements Serializable {
 	private JsonNode meta;
 	
 	@NotNull(message = "O questionário é obrigatório")
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "bw_questionnaire_id")
 	private BWQuestionnaire bwQuestionnaire;
 

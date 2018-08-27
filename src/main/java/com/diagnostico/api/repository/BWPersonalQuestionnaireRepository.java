@@ -8,4 +8,6 @@ import com.diagnostico.api.model.BWPersonalQuestionnaire;
 
 public interface BWPersonalQuestionnaireRepository extends JpaRepository<BWPersonalQuestionnaire, UUID> {
 
+	Long countByBwQuestionnaireId(UUID id);
+
 }

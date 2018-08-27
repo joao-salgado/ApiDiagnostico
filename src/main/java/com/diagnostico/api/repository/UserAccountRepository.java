@@ -15,5 +15,7 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, UUID> 
 	public Optional<UserAccount> findById(UUID id);
 
 	public List<UserAccount> findByCompanyIdAndUserGroupIdNot(UUID companyId, Long id);
+
+	public Long countByCompanyIdAndUserGroupIdNotAndActiveTrue(UUID companyId, Long id);
 	
 }

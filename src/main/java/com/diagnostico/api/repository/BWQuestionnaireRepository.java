@@ -12,4 +12,6 @@ public interface BWQuestionnaireRepository extends JpaRepository<BWQuestionnaire
 
 	public Optional<BWQuestionnaire> findByCompanyIdAndStatus(UUID companyId, QuestionnaireStatus status);
 
+	public Optional<BWQuestionnaire> findById(UUID companyId);
+
 }

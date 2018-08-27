@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -52,11 +51,11 @@ public class BWQuestionnaire implements Serializable {
 	private JsonNode meta;
 	
 	@NotNull(message = "Empresa é obrigatória")
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "company_id")
 	private Company company;
 	
-	@OneToMany(mappedBy = "bwQuestionnaire", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "bwQuestionnaire")
 	private List<BWSection> bwSections;
 	
 	@OneToMany(mappedBy = "bwQuestionnaire", fetch = FetchType.LAZY)
