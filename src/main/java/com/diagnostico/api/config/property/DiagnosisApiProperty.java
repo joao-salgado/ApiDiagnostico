@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("diagnosis")
 public class DiagnosisApiProperty {
 
-	private String originPermitted = "http://localhost:4200";
+	private String originPermitted;
 	
 	private final Security security = new Security();
 	
