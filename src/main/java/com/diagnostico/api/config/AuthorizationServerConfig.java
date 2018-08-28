@@ -18,6 +18,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
+import com.diagnostico.api.config.property.DiagnosisApiProperty;
 import com.diagnostico.api.config.token.CustomTokenEnhancer;
 
 @Profile("oauth-security")
@@ -29,11 +30,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
+	@Autowired
+	private DiagnosisApiProperty apiProperty ;
+	
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.inMemory()
-				.withClient("diagnosticoapp")
-				.secret("greatDiagnosis")
+				.withClient(apiProperty.getSecurity().getClient())
+				.secret(apiProperty.getSecurity().getClientSecret())
 				.scopes("read", "write")
 				.authorizedGrantTypes("password", "refresh_token")
 				.accessTokenValiditySeconds(20000*50)
@@ -56,7 +60,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Bean
 	public JwtAccessTokenConverter accessTokenConverter() {
 		JwtAccessTokenConverter accessTokenConverter = new JwtAccessTokenConverter();
-		accessTokenConverter.setSigningKey("diagnosticoTopDiagnostico");
+		accessTokenConverter.setSigningKey(apiProperty.getSecurity().getSigningKey());
 		return accessTokenConverter;
 	}
 

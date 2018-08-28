@@ -30,6 +30,12 @@ public class DiagnosisApiProperty {
 	public static class Security {
 
 		private boolean enableHttps;
+		
+		private String client;
+		
+		private String clientSecret;
+		
+		private String signingKey;
 	
 		public boolean isEnableHttps() {
 			return enableHttps;
@@ -37,6 +43,30 @@ public class DiagnosisApiProperty {
 	
 		public void setEnableHttps(boolean enableHttps) {
 			this.enableHttps = enableHttps;
+		}
+
+		public String getClient() {
+			return client;
+		}
+
+		public void setClient(String client) {
+			this.client = client;
+		}
+
+		public String getClientSecret() {
+			return clientSecret;
+		}
+
+		public void setClientSecret(String clientSecret) {
+			this.clientSecret = clientSecret;
+		}
+
+		public String getSigningKey() {
+			return signingKey;
+		}
+
+		public void setSigningKey(String signingKey) {
+			this.signingKey = signingKey;
 		}
 
 	}
