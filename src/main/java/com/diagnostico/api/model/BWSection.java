@@ -1,7 +1,6 @@
 package com.diagnostico.api.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -32,7 +31,7 @@ public class BWSection implements Serializable {
 	
 	@NotNull(message="O resultado da seção é obrigatório")
 	@Column(name = "total_result")
-	private BigDecimal totalResult;
+	private Integer totalResult;
 	
 	@Type(type = "jsonb")
 	@Column(columnDefinition = "jsonb")
@@ -59,11 +58,11 @@ public class BWSection implements Serializable {
 		this.section = section;
 	}
 
-	public BigDecimal getTotalResult() {
+	public Integer getTotalResult() {
 		return totalResult;
 	}
 
-	public void setTotalResult(BigDecimal totalResult) {
+	public void setTotalResult(Integer totalResult) {
 		this.totalResult = totalResult;
 	}
 

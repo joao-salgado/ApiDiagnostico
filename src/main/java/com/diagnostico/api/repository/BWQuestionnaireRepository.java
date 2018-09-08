@@ -11,7 +11,9 @@ import com.diagnostico.api.model.QuestionnaireStatus;
 public interface BWQuestionnaireRepository extends JpaRepository<BWQuestionnaire, UUID> {
 
 	public Optional<BWQuestionnaire> findByCompanyIdAndStatus(UUID companyId, QuestionnaireStatus status);
+	
+	public Optional<BWQuestionnaire> findByIdAndStatus(UUID id, QuestionnaireStatus status);
 
-	public Optional<BWQuestionnaire> findById(UUID companyId);
+	public Optional<BWQuestionnaire> findById(UUID id);
 
 }

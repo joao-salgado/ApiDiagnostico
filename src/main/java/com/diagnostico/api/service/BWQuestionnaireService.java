@@ -1,6 +1,5 @@
 package com.diagnostico.api.service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,7 +52,7 @@ public class BWQuestionnaireService {
 		company.setId(companyId);
 		
 		bwq.setStatus(QuestionnaireStatus.OPEN);
-		bwq.setTotalResult(new BigDecimal(0));
+		bwq.setTotalResult(0);
 		bwq.setCompany(company);
 		
 		BWQuestionnaire bwqSaved = questionnaireRepository.save(bwq);
@@ -72,7 +71,7 @@ public class BWQuestionnaireService {
 		for(int i=1; i<8; i++) {
 			section = new BWSection();
 			section.setSection(i);
-			section.setTotalResult(new BigDecimal(0));
+			section.setTotalResult(0);
 			section.setBwQuestionnaire(bwq);
 			sections.add(section);
 		}

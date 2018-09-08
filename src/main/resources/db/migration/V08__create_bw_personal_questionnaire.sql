@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS bw_personal_questionnaire(
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  total_result REAL NOT NULL,
+  total_result INTEGER NOT NULL,
   created TIMESTAMP DEFAULT current_timestamp,
   modified TIMESTAMP,
   meta jsonb,
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS bw_personal_questionnaire(
 CREATE TABLE IF NOT EXISTS bw_personal_section(
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   section INTEGER NOT NULL,
-  total_result REAL NOT NULL,
+  total_result INTEGER NOT NULL,
   meta jsonb,
   bw_personal_questionnaire_id UUID NOT NULL,
   FOREIGN KEY (bw_personal_questionnaire_id) REFERENCES bw_personal_questionnaire(id)

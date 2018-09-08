@@ -1,7 +1,6 @@
 package com.diagnostico.api.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -34,7 +33,7 @@ public class BWPersonalQuestionnaire implements Serializable {
 	private UUID id;
 	
 	@Column(name = "total_result")
-	private BigDecimal totalResult;
+	private Integer totalResult;
 	
 	@Column(updatable = false)
 	private LocalDateTime created;
@@ -76,11 +75,11 @@ public class BWPersonalQuestionnaire implements Serializable {
 		this.id = id;
 	}
 
-	public BigDecimal getTotalResult() {
+	public Integer getTotalResult() {
 		return totalResult;
 	}
 
-	public void setTotalResult(BigDecimal totalResult) {
+	public void setTotalResult(Integer totalResult) {
 		this.totalResult = totalResult;
 	}
 

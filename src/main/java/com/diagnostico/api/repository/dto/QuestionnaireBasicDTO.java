@@ -1,14 +1,19 @@
 package com.diagnostico.api.repository.dto;
 
+import java.util.List;
+
+import com.diagnostico.api.repository.projection.UserIdProjection;
+
 public class QuestionnaireBasicDTO {
 	
 	public QuestionnaireBasicDTO() {}
 	
-	public QuestionnaireBasicDTO(Object questionnaire, Long countUsers, Long countUsersWhoResponded) {
+	public QuestionnaireBasicDTO(Object questionnaire, Long countUsers, Long countUsersWhoResponded, List<UserIdProjection> usersWhoResponded) {
 		super();
-		this.questionnaire = questionnaire;
-		this.countUsers = countUsers;
-		this.countUsersWhoResponded = countUsersWhoResponded;
+		setQuestionnaire(questionnaire);
+		setCountUsers(countUsers);
+		setCountUsersWhoResponded(countUsersWhoResponded);
+		setUsersWhoResponded(usersWhoResponded);
 	}
 	
 	private Object questionnaire;
@@ -16,6 +21,8 @@ public class QuestionnaireBasicDTO {
 	private Long countUsers;
 	
 	private Long countUsersWhoResponded;
+	
+	private List<UserIdProjection> usersWhoResponded;
 
 	public Object getQuestionnaire() {
 		return questionnaire;
@@ -39,6 +46,14 @@ public class QuestionnaireBasicDTO {
 
 	public void setCountUsersWhoResponded(Long countUsersWhoResponded) {
 		this.countUsersWhoResponded = countUsersWhoResponded;
+	}
+
+	public List<UserIdProjection> getUsersWhoResponded() {
+		return usersWhoResponded;
+	}
+
+	public void setUsersWhoResponded(List<UserIdProjection> usersWhoResponded) {
+		this.usersWhoResponded = usersWhoResponded;
 	}
 
 }
