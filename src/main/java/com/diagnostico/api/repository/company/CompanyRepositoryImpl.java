@@ -33,16 +33,16 @@ public class CompanyRepositoryImpl implements CompanyRepositoryQuery {
 		Root<UserAccount> root = criteria.from(UserAccount.class);
 		
 		Join<Object, Object> bwPersonalQuestionnaires = root.join("bwPersonalQuestionnaires");
-		Join<Object, Object> bwQuestionnaire = bwPersonalQuestionnaires.join("bwQuestionnaire");
+		Join<Object, Object> bwQuestionnaire = bwPersonalQuestionnaires.join("bwQuestionnaire");		
 		
 		criteria.select(builder.construct(CompanyStatisticsBwDTO.class,
+										bwQuestionnaire.get("id"),
 										bwPersonalQuestionnaires.get("id"),
 										bwPersonalQuestionnaires.get("totalResult"),
-										bwPersonalQuestionnaires.get("created")/*,
-										bwPersonalQuestionnaires.get("bwPersonalSection")*/
-						))
+										bwQuestionnaire.get("created"),
+										bwQuestionnaire.get("modified"))
+						).orderBy(builder.asc(bwQuestionnaire.get("modified")))
 				.distinct(true);
-		
 		
 		Predicate[] predicates = addStatisticsRestrictions(companyStatisticsFilter, builder,
 															root, bwPersonalQuestionnaires,
@@ -50,7 +50,7 @@ public class CompanyRepositoryImpl implements CompanyRepositoryQuery {
 		criteria.where(predicates);
 		TypedQuery<CompanyStatisticsBwDTO> query = manager.createQuery(criteria);
 				
-		return (List<CompanyStatisticsBwDTO>) query.getResultList();
+		return query.getResultList();
 		
 	}
 
@@ -67,12 +67,12 @@ public class CompanyRepositoryImpl implements CompanyRepositoryQuery {
 		}
 
 		if (companyStatisticsFilter.getStart() != null) {
-			predicates.add(builder.greaterThanOrEqualTo(bwPersonalQuestionnaires.get("created"),
+			predicates.add(builder.greaterThanOrEqualTo(bwQuestionnaire.get("created"),
 							companyStatisticsFilter.getStart().atTime(LocalTime.MIN)));
 		}
 
 		if (companyStatisticsFilter.getEnd() != null) {
-			predicates.add(builder.lessThanOrEqualTo(bwPersonalQuestionnaires.get("created"),
+			predicates.add(builder.lessThanOrEqualTo(bwQuestionnaire.get("modified"),
 							companyStatisticsFilter.getEnd().atTime(LocalTime.MAX)));
 		}
 		

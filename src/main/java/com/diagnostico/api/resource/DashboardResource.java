@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.diagnostico.api.repository.BWPersonalSectionRepository;
 import com.diagnostico.api.repository.CompanyRepository;
+import com.diagnostico.api.repository.dto.CompanyStatisticsBwDTO;
 import com.diagnostico.api.repository.filter.CompanyStatisticsFilter;
 
 @RestController
@@ -19,12 +21,22 @@ public class DashboardResource {
 	@Autowired
 	private CompanyRepository companyRepository;
 	
+	@Autowired
+	private  BWPersonalSectionRepository bwPersonalSectionRepository;
+	
 	@GetMapping("companies/{companyId}/{diagnosis}")
 	public List<?> getCompanyStatistics(@PathVariable UUID companyId, @PathVariable String diagnosis, CompanyStatisticsFilter companyStatisticsFilter) {
 
 		switch (diagnosis) {
 			case "bw":
-				return companyRepository.getCompanyStatisticsBw(companyStatisticsFilter);
+				List<CompanyStatisticsBwDTO> list = companyRepository.getCompanyStatisticsBw(companyStatisticsFilter);
+				
+				list.stream().forEach(item -> {
+					item.setBwPersonalSection(bwPersonalSectionRepository.findByBwPersonalQuestionnaireId(item.getDiagnosisPersonalId()));
+				});
+				
+				return list;
+				
 			default:
 				return null;
 		}
