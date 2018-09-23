@@ -69,7 +69,7 @@ public class UserAccountService {
 	}
 	
 	public void verifyExistingUserByEmail(String email) {
-		Optional<UserAccount> user = userRepository.findByEmail(email);
+		Optional<UserAccount> user = userRepository.findByEmailAndActiveTrue(email);
 		if (user.isPresent()) {
 			throw new EmailException("Email já existente");
 		}

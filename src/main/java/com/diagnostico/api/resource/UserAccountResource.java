@@ -10,6 +10,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,13 +46,18 @@ public class UserAccountResource {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<UserAccount> findByid(@PathVariable UUID id) {
+	public ResponseEntity<UserAccount> findById(@PathVariable UUID id) {
 		
 		Optional<UserAccount> user = userRepository.findById(id);
 		if (!user.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(user.get());
+	}
+	
+	@GetMapping("/companies/{companyId}")
+	public Page<UserAccount> findByCompany(@PathVariable UUID companyId, Pageable pageable) {
+		return userRepository.findByCompanyId(companyId, pageable);
 	}
 	
 	@PostMapping

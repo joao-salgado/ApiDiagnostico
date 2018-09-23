@@ -56,7 +56,7 @@ public class CompanyResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> create(@Valid @RequestBody Company company, HttpServletRequest request,
+	public ResponseEntity<Company> create(@Valid @RequestBody Company company, HttpServletRequest request,
 			HttpServletResponse response) {
 		
 		Company companySaved = companyService.create(company);
