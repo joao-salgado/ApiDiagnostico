@@ -1,5 +1,6 @@
 package com.diagnostico.api.resource;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,16 @@ public class DashboardResource {
 	private CompanyRepository companyRepository;
 	
 	@GetMapping("companies/{companyId}/{diagnosis}")
-	public Object getCompanyBwStatistics(@PathVariable UUID companyId, @PathVariable String diagnosis, CompanyStatisticsFilter companyStatisticsFilter) {
-		return (Object) companyRepository.getCompanyStatistics(companyStatisticsFilter);
+	public List<?> getCompanyStatistics(@PathVariable UUID companyId, @PathVariable String diagnosis, CompanyStatisticsFilter companyStatisticsFilter) {
+
+		switch (diagnosis) {
+			case "bw":
+				return companyRepository.getCompanyStatisticsBw(companyStatisticsFilter);
+			default:
+				return null;
+		}
+		
+		
 	}
 
 }
