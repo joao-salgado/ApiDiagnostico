@@ -94,6 +94,7 @@ public class UserAccount implements Serializable {
 	@PrePersist
 	public void setAttributePrePersist() {
 		this.created = LocalDateTime.now();
+		this.active = true;
 	}
 
 	@PreUpdate

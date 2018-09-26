@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,12 +37,14 @@ public class InviteResource {
 	private InviteRepository inviteRepository;
 	
 	@PostMapping
+	@PreAuthorize("hasAuthority('ROLE_INVITE')")
 	public ResponseEntity<Invite> create(@Valid @RequestBody List<Invite> invitations) {
 		inviteService.create(invitations);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 	
 	@GetMapping("/companies/{id}")
+	@PreAuthorize("hasAuthority('ROLE_INVITE')")
 	public Page<Invite> findAll(@PathVariable UUID id, Pageable pageable) {
 		return inviteRepository.findByCompanyId(id, pageable);
 	}
@@ -54,6 +57,7 @@ public class InviteResource {
 	}
 	
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasAuthority('ROLE_INVITE')")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteInvite(@PathVariable Long id) {
 		Optional<Invite> inviteOptional = inviteRepository.findById(id);

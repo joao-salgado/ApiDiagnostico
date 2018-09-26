@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,6 +57,7 @@ public class BWResource {
 	private BWPersonalQuestionnaireService bwPersonalQuestionnaireService;
 	
 	@PostMapping("/companies/{companyId}")
+	@PreAuthorize("hasAuthority('ROLE_DIAGNOSIS')")
 	public ResponseEntity<BWQuestionnaire> create(@PathVariable UUID companyId, HttpServletResponse response) {
 		
 		BWQuestionnaire bwq = bwQuestionnaireService.create(companyId);
@@ -65,6 +67,7 @@ public class BWResource {
 	}
 	
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasAuthority('ROLE_DIAGNOSIS')")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable UUID id) {
 		
@@ -78,6 +81,7 @@ public class BWResource {
 	}
 	
 	@PutMapping("/{id}/close")
+	@PreAuthorize("hasAuthority('ROLE_DIAGNOSIS')")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void closeDiagnosis(@PathVariable UUID id) {
 		

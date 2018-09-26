@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,7 +62,7 @@ public class UserAccountResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> create(@Valid @RequestBody UserAccount user, HttpServletRequest request,
+	public ResponseEntity<UserAccount> create(@Valid @RequestBody UserAccount user, HttpServletRequest request,
 			HttpServletResponse response) {
 		
 		UserAccount userSaved = userService.createByCode(user);
@@ -70,7 +71,8 @@ public class UserAccountResource {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@PathVariable UUID id, @Valid @RequestBody UserAccount user) {
+	@PreAuthorize("hasAuthority('ROLE_USER')")
+	public ResponseEntity<UserAccount> update(@PathVariable UUID id, @Valid @RequestBody UserAccount user) {
 		
 		UserAccount userSaved = userService.update(id, user);
 		return ResponseEntity.ok(userSaved);
