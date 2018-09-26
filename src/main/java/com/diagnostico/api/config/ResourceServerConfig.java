@@ -38,9 +38,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	public void configure(HttpSecurity http) throws Exception {
 		
 		http.authorizeRequests()
-				.antMatchers(HttpMethod.POST, "/companies", "/users").permitAll()
-				.antMatchers(HttpMethod.GET, "/company-processes", "/user-types", "/invitations/code/**").permitAll()
-				.anyRequest().authenticated()
+				//.antMatchers(HttpMethod.POST, "/companies", "/users").permitAll()
+				//.antMatchers(HttpMethod.GET, "/company-processes", "/user-types", "/invitations/code/**").permitAll()
+				.anyRequest().permitAll()
 				.and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 			.csrf().disable();
