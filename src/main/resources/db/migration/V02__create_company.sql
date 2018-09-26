@@ -3,7 +3,15 @@ CREATE TABLE IF NOT EXISTS company_process (
   name TEXT NOT NULL
 );
 
-INSERT INTO company_process(name) VALUES ('Scrum'), ('Cascata');
+INSERT INTO company_process(name) VALUES ('AD HOC'),
+											('Desenvolvimento ágil de software'),
+											('Desenvolvimento iterativo e incremental'),
+											('Desenvolvimento rápido de aplicação (RAD)'),
+											('Modelo cascata'),
+											('Modelo baseado em componentes'),
+											('Modelo em espiral'),
+											('Prototipação'),
+											('Outro');
 
 CREATE TABLE IF NOT EXISTS company(
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),

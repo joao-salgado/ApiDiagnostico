@@ -3,8 +3,19 @@ CREATE TABLE IF NOT EXISTS user_type (
   name TEXT NOT NULL
 );
 
-INSERT INTO user_type(name) VALUES ('Admin'), ('Tester'), ('Analista de sistemas'),
-('DBA'), ('Programador'), ('Engenheiro de software');
+INSERT INTO user_type(name) VALUES ('Admin'),
+									('Administrador(a) de banco de dados'),
+									('Analista de segurança'),
+									('Analista de sistemas'),
+									('Arquiteto de software'),
+									('Cientista de dados'),
+									('Designer'),
+									('Engenheiro(a) de software'),
+									('Gerente de projetos'),
+									('Programador(a)'),
+									('Suporte'),
+									('Tester'),
+									('Outro');
 
 CREATE TABLE IF NOT EXISTS user_account(
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
