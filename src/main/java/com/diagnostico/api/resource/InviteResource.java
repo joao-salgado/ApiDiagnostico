@@ -38,9 +38,10 @@ public class InviteResource {
 	
 	@PostMapping
 	@PreAuthorize("hasAuthority('ROLE_INVITE')")
-	public ResponseEntity<Invite> create(@Valid @RequestBody List<Invite> invitations) {
-		inviteService.create(invitations);
-		return ResponseEntity.status(HttpStatus.CREATED).build();
+	@ResponseStatus(HttpStatus.CREATED)
+	public List<Invite> create(@Valid @RequestBody List<Invite> invitations) {
+		List<Invite> invites = inviteService.create(invitations);
+		return invites;
 	}
 	
 	@GetMapping("/companies/{id}")

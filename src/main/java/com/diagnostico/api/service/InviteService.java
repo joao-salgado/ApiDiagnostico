@@ -28,7 +28,7 @@ public class InviteService {
 	private DiagnosisApiProperty property;
 	
 	public List<Invite> create(List<Invite> invitations) {
-				
+		
 		for (Invite invite : invitations) {
 			invite.setCode(UUID.randomUUID().toString());
 			invite.setSituation(InviteSituation.SEND);
