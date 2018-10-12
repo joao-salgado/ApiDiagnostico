@@ -13,6 +13,8 @@ public class CompanyStatisticsFilter {
 	
 	private String diagnosis;
 	
+	private String experience;
+	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private LocalDate start;
 	
@@ -41,6 +43,14 @@ public class CompanyStatisticsFilter {
 
 	public void setDiagnosis(String diagnosis) {
 		this.diagnosis = diagnosis;
+	}
+
+	public String getExperience() {
+		return experience;
+	}
+
+	public void setExperience(String experience) {
+		this.experience = experience;
 	}
 
 	public LocalDate getStart() {

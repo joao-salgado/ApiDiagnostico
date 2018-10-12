@@ -70,6 +70,9 @@ public class UserAccount implements Serializable {
 
 	private Date birthdate;
 	
+	@Column(name="start_work")
+	private LocalDateTime startWork;
+	
 	@NotNull(message = "O tipo de usuário é obrigatório")
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_type_id")
@@ -180,6 +183,14 @@ public class UserAccount implements Serializable {
 
 	public void setBirthdate(Date birthdate) {
 		this.birthdate = birthdate;
+	}
+
+	public LocalDateTime getStartWork() {
+		return startWork;
+	}
+
+	public void setStartWork(LocalDateTime startWork) {
+		this.startWork = startWork;
 	}
 
 	public UserGroup getUserGroup() {

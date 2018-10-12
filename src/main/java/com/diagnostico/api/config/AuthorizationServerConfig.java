@@ -38,7 +38,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				.secret(apiProperty.getSecurity().getClientSecret())
 				.scopes("read", "write")
 				.authorizedGrantTypes("password", "refresh_token")
-				.accessTokenValiditySeconds(20000*50)
+				.accessTokenValiditySeconds(86400)
 				.refreshTokenValiditySeconds(3600 * 24);
 	}
 	

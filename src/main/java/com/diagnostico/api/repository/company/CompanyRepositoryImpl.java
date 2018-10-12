@@ -1,5 +1,6 @@
 package com.diagnostico.api.repository.company;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +65,38 @@ public class CompanyRepositoryImpl implements CompanyRepositoryQuery {
 
 		if (!StringUtils.isEmpty(companyStatisticsFilter.getRole())) {
 			predicates.add(builder.equal(root.get("userType").get("id"), companyStatisticsFilter.getRole()));
+		}
+				
+		if (!StringUtils.isEmpty(companyStatisticsFilter.getExperience())) {
+			
+			LocalDate minDate = null;
+			LocalDate maxDate = null;
+			
+			int year = LocalDate.now().getYear();
+			int month = LocalDate.now().getMonthValue();
+			int day = LocalDate.now().getDayOfMonth();
+			
+			switch (companyStatisticsFilter.getExperience()) {
+				case "menos de um ano":
+					minDate = LocalDate.of(year-1, month, day);
+					maxDate = LocalDate.of(year, month, day);
+					break;
+				case "de um a dois anos":
+					minDate = LocalDate.of(year-2, month, day);
+					maxDate = LocalDate.of(year-1, month, day);
+					break;
+				case "de dois a cinco anos":
+					minDate = LocalDate.of(year-5, month, day);
+					maxDate = LocalDate.of(year-2, month, day);
+					break;
+				case "mais de cinco anos":
+					minDate = LocalDate.of(year-5, month, day);
+					maxDate = LocalDate.of(year-100, month, day);
+					break;
+			}
+			
+			predicates.add(builder.lessThanOrEqualTo(root.get("startWork"), maxDate.atStartOfDay()));
+			predicates.add(builder.greaterThanOrEqualTo(root.get("startWork"), minDate.atStartOfDay()));
 		}
 
 		if (companyStatisticsFilter.getStart() != null) {
