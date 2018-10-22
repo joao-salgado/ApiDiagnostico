@@ -30,6 +30,7 @@ import com.diagnostico.api.repository.BWPersonalQuestionnaireRepository;
 import com.diagnostico.api.repository.BWQuestionnaireRepository;
 import com.diagnostico.api.repository.UserAccountRepository;
 import com.diagnostico.api.repository.dto.QuestionnaireBasicDTO;
+import com.diagnostico.api.repository.projection.BWPersonalQuestionnaireProjection;
 import com.diagnostico.api.repository.projection.UserIdProjection;
 import com.diagnostico.api.service.BWPersonalQuestionnaireService;
 import com.diagnostico.api.service.BWQuestionnaireService;
@@ -74,6 +75,15 @@ public class BWResource {
 		Optional<BWQuestionnaire> bwqOptional = bwQuestionnaireRepository.findById(id);
 		
 		if(bwqOptional.isPresent()) {
+			
+			List<BWPersonalQuestionnaire> lbwpq = bwPersonalQuestionnaireRepository.findByBwQuestionnaireIdAndStatus(id, QuestionnaireStatus.OPEN);
+			
+			lbwpq.forEach(q -> {
+				q.setStatus(QuestionnaireStatus.CANCELED);
+			});
+			
+			bwPersonalQuestionnaireRepository.save(lbwpq);
+			
 			BWQuestionnaire bwq = bwqOptional.get();
 			bwq.setStatus(QuestionnaireStatus.CANCELED);
 			bwQuestionnaireRepository.save(bwq);
@@ -88,6 +98,15 @@ public class BWResource {
 		Optional<BWQuestionnaire> bwqOptional = bwQuestionnaireRepository.findById(id);
 		
 		if(bwqOptional.isPresent()) {
+			
+			List<BWPersonalQuestionnaire> lbwpq = bwPersonalQuestionnaireRepository.findByBwQuestionnaireIdAndStatus(id, QuestionnaireStatus.OPEN);
+			
+			lbwpq.forEach(q -> {
+				q.setStatus(QuestionnaireStatus.CANCELED);
+			});
+			
+			bwPersonalQuestionnaireRepository.save(lbwpq);
+			
 			BWQuestionnaire bwq = bwqOptional.get();
 			bwq.setStatus(QuestionnaireStatus.CLOSED);
 			bwQuestionnaireRepository.save(bwq);
@@ -104,7 +123,7 @@ public class BWResource {
 		}
 		
 		Long countUsers = userRepository.countByCompanyIdAndUserGroupIdNotAndActiveTrue(companyId, 1l);
-		Long countUsersWhoResponded = bwPersonalQuestionnaireRepository.countByBwQuestionnaireId(bwq.get().getId());
+		Long countUsersWhoResponded = bwPersonalQuestionnaireRepository.countByStatusAndBwQuestionnaireId(QuestionnaireStatus.CLOSED, bwq.get().getId());
 		List<UserIdProjection> usersWhoResponded = bwPersonalQuestionnaireRepository.findByBwQuestionnaireId(bwq.get().getId());
 		
 		return ResponseEntity.ok(new QuestionnaireBasicDTO(bwq.get(), countUsers, countUsersWhoResponded, usersWhoResponded));
@@ -114,6 +133,17 @@ public class BWResource {
 	public ResponseEntity<BWPersonalQuestionnaire> savePersonalDiagnosis(@PathVariable UUID diagnosisId, @Valid @RequestBody BWPersonalQuestionnaire questionnaire, HttpServletResponse response) {
 		BWPersonalQuestionnaire pbwq = bwPersonalQuestionnaireService.create(diagnosisId, questionnaire);
 		return ResponseEntity.status(HttpStatus.CREATED).body(pbwq);
+	}
+	
+	@PutMapping("/{diagnosisId}/personal/{personalDiagnosisId}")
+	@ResponseStatus(HttpStatus.OK)
+	public void updatePersonalDiagnosis(@PathVariable UUID diagnosisId, @PathVariable UUID personalDiagnosisId, @Valid @RequestBody BWPersonalQuestionnaire questionnaire, HttpServletResponse response) {
+		bwPersonalQuestionnaireService.update(diagnosisId, questionnaire);
+	}
+	
+	@GetMapping("/personal/{userId}")
+	public BWPersonalQuestionnaireProjection updatePersonalDiagnosis(@PathVariable UUID userId, HttpServletResponse response) {
+		return bwPersonalQuestionnaireRepository.findByUserIdAndStatus(userId, QuestionnaireStatus.OPEN);
 	}
 
 }

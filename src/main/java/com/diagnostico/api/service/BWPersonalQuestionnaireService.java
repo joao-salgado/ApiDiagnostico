@@ -54,17 +54,44 @@ public class BWPersonalQuestionnaireService {
 		});
 		bwSectionPersonalRepository.save(bwpsq);
 		
-		BWQuestionnaire bwq = bwqOptional.get();
-		bwq.setTotalResult(bwq.getTotalResult() + bwpq.getTotalResult());
-		questionnaireRepository.save(bwq);
+		return bwpq;
 		
-		List<BWSection> bwSections = bwSectionRepository.findByBwQuestionnaireId(bwq.getId());
-		int index = 0;
-		for(BWSection section : bwSections) {
-			section.setTotalResult(section.getTotalResult() + bwpsq.get(index).getTotalResult());
-			index++;
+	}
+
+	public BWPersonalQuestionnaire update(UUID questionnaireId, BWPersonalQuestionnaire questionnaire) {
+		
+		Optional<BWQuestionnaire> bwqOptional = questionnaireRepository.findByIdAndStatus(questionnaireId, QuestionnaireStatus.OPEN);
+		
+		if(!bwqOptional.isPresent()) {
+			throw new QuestionnaireException("Questionário não existe ou já está fechado.");
 		}
-		bwSectionRepository.save(bwSections);
+		
+		if(questionnaire.getBwPersonalSection().size() != 7) {
+			throw new QuestionnaireException("Devem haver 7 seções no questionário.");
+		}
+		
+		BWPersonalQuestionnaire bwpq = questionnairePersonalRepository.save(questionnaire);
+		
+		List<BWPersonalSection> bwpsq = questionnaire.getBwPersonalSection();
+		bwpsq.forEach(section -> {
+			section.setBwPersonalQuestionnaire(new BWPersonalQuestionnaire());
+			section.getBwPersonalQuestionnaire().setId(bwpq.getId());
+		});
+		bwSectionPersonalRepository.save(bwpsq);
+		
+		if(bwpq.getStatus().equals(QuestionnaireStatus.CLOSED)) {
+			BWQuestionnaire bwq = bwqOptional.get();
+			bwq.setTotalResult(bwq.getTotalResult() + bwpq.getTotalResult());
+			questionnaireRepository.save(bwq);
+			
+			List<BWSection> bwSections = bwSectionRepository.findByBwQuestionnaireId(bwq.getId());
+			int index = 0;
+			for(BWSection section : bwSections) {
+				section.setTotalResult(section.getTotalResult() + bwpsq.get(index).getTotalResult());
+				index++;
+			}
+			bwSectionRepository.save(bwSections);
+		}
 		
 		return bwpq;
 	}

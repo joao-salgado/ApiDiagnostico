@@ -7,6 +7,8 @@ import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -39,6 +41,9 @@ public class BWPersonalQuestionnaire implements Serializable {
 	private LocalDateTime created;
 
 	private LocalDateTime modified;
+	
+	@Enumerated(EnumType.STRING)
+	private QuestionnaireStatus status;
 	
 	@Type(type = "jsonb")
 	@Column(columnDefinition = "jsonb")
@@ -129,6 +134,14 @@ public class BWPersonalQuestionnaire implements Serializable {
 
 	public void setBwPersonalSection(List<BWPersonalSection> bwPersonalSection) {
 		this.bwPersonalSection = bwPersonalSection;
+	}
+
+	public QuestionnaireStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(QuestionnaireStatus status) {
+		this.status = status;
 	}
 
 	@Override

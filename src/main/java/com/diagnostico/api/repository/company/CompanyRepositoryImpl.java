@@ -114,6 +114,8 @@ public class CompanyRepositoryImpl implements CompanyRepositoryQuery {
 		}
 		
 		predicates.add(builder.equal(bwQuestionnaire.get("status"), QuestionnaireStatus.CLOSED));
+		
+		predicates.add(builder.equal(bwPersonalQuestionnaires.get("status"), QuestionnaireStatus.CLOSED));
 
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
