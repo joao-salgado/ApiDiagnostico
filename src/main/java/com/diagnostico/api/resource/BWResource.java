@@ -122,7 +122,7 @@ public class BWResource {
 			return ResponseEntity.ok().build();
 		}
 		
-		Long countUsers = userRepository.countByCompanyIdAndUserGroupIdNotAndActiveTrue(companyId, 1l);
+		Long countUsers = userRepository.countByCompanyIdAndActiveTrue(companyId);
 		Long countUsersWhoResponded = bwPersonalQuestionnaireRepository.countByStatusAndBwQuestionnaireId(QuestionnaireStatus.CLOSED, bwq.get().getId());
 		List<UserIdProjection> usersWhoResponded = bwPersonalQuestionnaireRepository.findByBwQuestionnaireId(bwq.get().getId());
 		

@@ -21,5 +21,7 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, UUID> 
 	public Page<UserAccount> findByCompanyId(UUID id, Pageable pageable);
 
 	public Long countByCompanyIdAndUserGroupIdNotAndActiveTrue(UUID companyId, Long id);
+
+	public Long countByCompanyIdAndActiveTrue(UUID companyId);
 	
 }
