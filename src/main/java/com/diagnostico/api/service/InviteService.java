@@ -1,5 +1,6 @@
 package com.diagnostico.api.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,12 +30,17 @@ public class InviteService {
 	
 	public List<Invite> create(List<Invite> invitations) {
 		
+		List<Invite> in = new ArrayList<Invite>();
+		
 		for (Invite invite : invitations) {
-			invite.setCode(UUID.randomUUID().toString());
-			invite.setSituation(InviteSituation.SEND);
+			if(!invite.getEmail().isEmpty()) {
+				invite.setCode(UUID.randomUUID().toString());
+				invite.setSituation(InviteSituation.SEND);
+				in.add(invite);
+			}
 		}
 		
-		List<Invite> savedInvitations = inviteRepository.save(invitations);
+		List<Invite> savedInvitations = inviteRepository.save(in);
 		sendInvite(savedInvitations);
 		
 		return savedInvitations;
