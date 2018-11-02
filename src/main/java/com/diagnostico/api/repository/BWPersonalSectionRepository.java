@@ -11,4 +11,5 @@ public interface BWPersonalSectionRepository extends JpaRepository<BWPersonalSec
 
 	List<BWPersonalSection> findByBwPersonalQuestionnaireId(UUID diagnosisPersonalId);
 
+
 }
