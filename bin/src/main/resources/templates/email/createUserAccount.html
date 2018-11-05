@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Email</title>
+</head>
+
+<body>
+	<p style = "color: black;">
+		Você foi convidado pela sua empresa para participar do Diagnóstico de Conhecimento. Para criar sua conta, clique no link abaixo!
+	</p>
+	<p><a th:href="@{${linkCreateUserAccount}}" style="color:blue;font-size:12px;">Clique aqui</a></p>
+
+</body>
+</html>

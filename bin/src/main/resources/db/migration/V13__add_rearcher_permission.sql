@@ -1,0 +1,1 @@
+INSERT INTO user_group_permission(user_group_id, permission_id) VALUES (3,5);
