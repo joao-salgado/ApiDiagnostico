@@ -22,6 +22,13 @@ public class CompanyProcess implements Serializable {
 	
 	@NotEmpty(message = "Nome do usuário é um campo obrigatório")
 	private String name;
+	
+	public CompanyProcess() {}
+
+	public CompanyProcess(String name) {
+		super();
+		this.name = name;
+	}
 
 	public Long getId() {
 		return id;

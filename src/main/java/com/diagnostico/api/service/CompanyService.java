@@ -8,7 +8,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.diagnostico.api.model.Company;
+import com.diagnostico.api.model.CompanyProcess;
 import com.diagnostico.api.model.UserAccount;
+import com.diagnostico.api.repository.CompanyProcessRepository;
 import com.diagnostico.api.repository.CompanyRepository;
 import com.diagnostico.api.service.util.BeanUtilsProperties;
 
@@ -19,12 +21,27 @@ public class CompanyService {
 	private CompanyRepository companyRepository;
 	
 	@Autowired
+	private CompanyProcessRepository companyProcessRepository;
+	
+	@Autowired
 	private UserAccountService userService;
 
 	public Company create(Company company) {
 		
 		UserAccount user = company.getUserAccount().get(0);
 		userService.verifyExistingUserByEmail(user.getEmail());
+		
+		/**
+		 * VERIFICA SE O PROCESSO SELECIONADO FOI DO TIPO "OUTRO"
+		 */
+		if(company.getCompanyProcess().getId() == 9) {
+			String name = company.getMeta().get("other_company_process").asText();
+			if(!name.isEmpty()) {
+				CompanyProcess newProcess = companyProcessRepository.save(new CompanyProcess(name));
+				company.getCompanyProcess().setId(newProcess.getId());
+			}
+		}
+		
 		Company savedCompany = companyRepository.save(company);
 		
 		user.setCompany(new Company());
