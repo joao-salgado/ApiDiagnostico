@@ -6,4 +6,5 @@ import com.diagnostico.api.model.UserType;
 
 public interface UserTypeRepository extends JpaRepository<UserType, Long> {
 
+
 }

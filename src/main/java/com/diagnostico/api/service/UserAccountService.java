@@ -16,8 +16,10 @@ import com.diagnostico.api.model.Company;
 import com.diagnostico.api.model.Invite;
 import com.diagnostico.api.model.InviteSituation;
 import com.diagnostico.api.model.UserAccount;
+import com.diagnostico.api.model.UserType;
 import com.diagnostico.api.repository.InviteRepository;
 import com.diagnostico.api.repository.UserAccountRepository;
+import com.diagnostico.api.repository.UserTypeRepository;
 
 @Service
 public class UserAccountService {
@@ -26,18 +28,38 @@ public class UserAccountService {
 	private UserAccountRepository userRepository;
 	
 	@Autowired
+	private UserTypeRepository userTypeRepository;
+	
+	@Autowired
 	private InviteRepository inviteRepository;
 	
 	public UserAccount createByCompany(UserAccount user) {
 		verifyExistingUserByEmail(user.getEmail());
 		
+		verifyIfNewUserType(user);
+		
 		user.setPassword(passwordEncoder().encode(user.getPassword()));
 		return userRepository.save(user);
+	}
+
+	private void verifyIfNewUserType(UserAccount user) {
+		/**
+		 * VERIFICA SE O TIPO DE PAPEL SELECIONADO FOI DO TIPO "OUTRO"
+		 */
+		if(user.getUserType().getId() == 13) {
+			String userType = user.getMeta().get("other_user_type").asText();
+			if(!userType.isEmpty()) {
+				UserType newUserType = userTypeRepository.save(new UserType(userType));
+				user.getUserType().setId(newUserType.getId());
+			}
+		}
 	}
 	
 	public UserAccount createByCode(UserAccount user) {
 		
 		verifyExistingUserByEmail(user.getEmail());
+		
+		verifyIfNewUserType(user);
 		
 		Invite invite = verifyCode(user.getMeta().get("companyCode").asText());
 		user.setCompany(new Company());	

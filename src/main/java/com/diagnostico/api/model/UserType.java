@@ -22,6 +22,12 @@ public class UserType implements Serializable {
 	
 	@NotEmpty(message = "Nome do tipo obrigatório")
 	private String name;
+	
+	public UserType() {}
+	
+	public UserType(String userType) {
+		this.name = userType;
+	}
 
 	public Long getId() {
 		return id;
