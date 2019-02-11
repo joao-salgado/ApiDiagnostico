@@ -6,7 +6,9 @@ import java.util.UUID;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class CompanyStatisticsFilter {
-
+	
+	private Long process;
+	
 	private Long role;
 	
 	private UUID company;
@@ -67,6 +69,14 @@ public class CompanyStatisticsFilter {
 
 	public void setEnd(LocalDate end) {
 		this.end = end;
+	}
+
+	public Long getProcess() {
+		return process;
+	}
+
+	public void setProcess(Long process) {
+		this.process = process;
 	}
 	
 }
