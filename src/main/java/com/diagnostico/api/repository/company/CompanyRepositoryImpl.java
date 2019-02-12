@@ -113,6 +113,10 @@ public class CompanyRepositoryImpl implements CompanyRepositoryQuery {
 			predicates.add(builder.equal(root.get("company").get("id"), companyStatisticsFilter.getCompany()));
 		}
 		
+		if (companyStatisticsFilter.getProcess() != null) {
+			predicates.add(builder.equal(root.get("company").get("companyProcess").get("id"), companyStatisticsFilter.getProcess()));
+		}
+				
 		predicates.add(builder.equal(bwQuestionnaire.get("status"), QuestionnaireStatus.CLOSED));
 		
 		predicates.add(builder.equal(bwPersonalQuestionnaires.get("status"), QuestionnaireStatus.CLOSED));
